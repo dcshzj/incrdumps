@@ -65,6 +65,7 @@ def grablistofwikis():
 	wikilist = wikilisting
 
 def foreachwiki():
+	global count
 	for thewiki in wikilist:
 		curwiki = ''.join(thewiki)
 		if (curwiki == "Here's the big fat disclaimer."): # The only non-wiki string that is in bold
@@ -73,6 +74,7 @@ def foreachwiki():
 			downloaddump(curwiki)
 			upload(curwiki)
 			rmdir(curwiki)
+			count = 0 # Bringing it back down to 0 once its done uploading
 
 def downloaddump(wiki):
 	global rsynchost, tempdir
