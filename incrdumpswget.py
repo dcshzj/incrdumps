@@ -22,20 +22,9 @@ import sys
 import time
 import urllib
 
-# Configuration
-tempdir = "" # No slash at the end
-# Archive.org's S3-like API keys (Get yours at http://archive.org/account/s3.php)
-accesskey = ""
-secretkey = ""
-# URL-to-the-incr-dumps
-hosturl = "" # No slash at the end
-wgethost = "" # No slash at the end
-# Archive.org matters
-collection = ""
-mediatype = ""
-sizehint = "107374182400" # 100GB
+import settings
 
-# Nothing to change below...
+# Settings are all at settings.py, thanks!
 # Global configuration
 userdate = sys.argv[1]
 filelist = {
@@ -75,7 +64,7 @@ def foreachwiki():
 			downloaddump(curwiki)
 			upload(curwiki)
 			rmdir(curwiki)
-			count = 0 # Bringing it back down to 0 once its done uploading
+			count = 0 # Bringing it back down to 0 once its done uploading for the current wiki
 
 def downloaddump(wiki):
 	global rsynchost, tempdir
@@ -101,7 +90,7 @@ def upload(wiki):
 			thedumpfile = curfile
 		time.sleep(1) # Ctrl-C
 		if (count == 0):
-			curl = ['curl', '--retry 20', '--location',
+			curl = ['curl', '--retry 3', '--location',
 					'--header', "'x-amz-auto-make-bucket:1'",
 					'--header', "'x-archive-meta01-collection:%s'" % (collection),
 					'--header', "'x-archive-meta-mediatype:%s'" % (mediatype),
@@ -113,10 +102,10 @@ def upload(wiki):
 					'--upload-file', "%s http://s3.us.archive.org/incr-%s-%s/%s" % (thedumpfile,wiki,userdate,thedumpfile),
 					]
 			os.system(' '.join(curl))
-			os.system("sleep 60")
+			time.sleep(60)
 			count += 1
 		else:
-			curl = ['curl', '--retry 20', '--location',
+			curl = ['curl', '--retry 3', '--location',
 					'--header', "'x-archive-queue-derive:0'",
 					'--header', '"authorization: LOW %s:%s"' % (accesskey,secretkey),
 					'--upload-file', "%s http://s3.us.archive.org/incr-%s-%s/%s" % (thedumpfile,wiki,userdate,thedumpfile),
