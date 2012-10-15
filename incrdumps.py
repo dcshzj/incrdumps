@@ -70,7 +70,7 @@ def grablistofwikis():
 	wikilist = wikilisting
 
 def foreachwiki():
-	global count, langname, sitename
+	global count, langname, sitename, curdate
 	for thewiki in wikilist:
 		curwiki = ''.join(thewiki)
 		x = converter.ASConverter()
