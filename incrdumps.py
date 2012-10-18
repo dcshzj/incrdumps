@@ -82,6 +82,8 @@ def foreachwiki():
 			x.convertdb(curwiki)
 			if (x.special):
 				sitename = x.sitename
+			elif (x.site == ""):
+				sitename = curwiki
 			else:
 				sitename = "the %s" % (x.sitename)
 			upload(curwiki)
