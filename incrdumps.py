@@ -27,7 +27,7 @@ import settings
 
 # Settings are all at settings.py, thanks!
 # Global configuration
-userdate = sys.argv[1]
+userdate = ""
 filelist = {
 	'-md5sums.txt',
 	'-pages-meta-hist-incr.xml.bz2',
@@ -40,7 +40,7 @@ count = 0
 start = ""
 sitename = ""
 curdate = ""
-wikitoarchive = ""
+wikitoarchive = None
 
 # Clone the settings in settings.py
 tempdir = settings.tempdir
@@ -134,11 +134,12 @@ def rmdir(wiki):
 	os.system('rm -rf ' + wiki)
 
 def archiveone(wiki):
-	global userdate
+	global sitename, userdate
 	x = converter.ASConverter()
 	x.convertdate(userdate)
 	downloaddump(wiki)
 	x.convertdb(wiki)
+	curdate = x.date
 	if (x.special):
 		sitename = x.sitename
 	elif (x.site == ""):
@@ -147,33 +148,32 @@ def archiveone(wiki):
 		sitename = "the %s" % (x.sitename)
 	upload(wiki)
 	rmdir(wiki)
-	count = 0 # Bringing it back down to 0 once its done uploading for the current wiki
 
 def processopts():
-	global start, wikitoarchive
-	if not params:
-		params = sys.argv[1:]
-	try:
-		opts, args = getopt.getopt(params, "", ["wiki"])
-	except getopt.GetoptError, err:
-		# print help information and exit:
-		print str(err) # will print something like "option -a not recognized"
-		sys.exit(2)
-	for o, a in opts:
-		if o in ("--wiki"):
-			wikitoarchive = a
-        else:
-            assert False, "unhandled option"
+	global userdate, wikitoarchive
+	if (len(sys.argv) < 2):
+		print "You are missing the date parameter! Please tell me which date to archive!"
+		sys.exit(1)
+	elif (len(sys.argv) == 2):
+		userdate = sys.argv[1]
+	elif (len(sys.argv) == 3):
+		userdate = sys.argv[1]
+		wikitoarchive = sys.argv[2]
+	elif (len(sys.argv) > 3):
+		print "Warning: More than 2 arguments detected, ignoring the extras..."
+		userdate = sys.argv[1]
+		wikitoarchive = sys.argv[2]
 
 def process():
 	global wikitoarchive
 	welcome()
 	processopts()
-	if (wikitoarchive != ""):
+	print wikitoarchive
+	if (wikitoarchive != None):
 		archiveone(wikitoarchive)
 	else:
-		grablistofwikis()
-		foreachwiki()
-	bye()
+		#grablistofwikis()
+		#foreachwiki()
+		bye()
 
 process()
