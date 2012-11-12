@@ -172,8 +172,8 @@ def process():
 	if (wikitoarchive != None):
 		archiveone(wikitoarchive)
 	else:
-		#grablistofwikis()
-		#foreachwiki()
+		grablistofwikis()
+		foreachwiki()
 		bye()
 
 process()
