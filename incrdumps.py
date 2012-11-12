@@ -167,7 +167,6 @@ def process():
 	global wikitoarchive
 	welcome()
 	processopts()
-	print wikitoarchive
 	if (wikitoarchive != None):
 		archiveone(wikitoarchive)
 	else:
