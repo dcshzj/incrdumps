@@ -172,7 +172,7 @@ def process():
 	else:
 		grablistofwikis()
 		foreachwiki()
-		bye()
+	bye()
 
 if __name__ == "__main__":
 	process()
