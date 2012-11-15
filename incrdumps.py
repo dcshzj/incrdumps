@@ -66,8 +66,10 @@ def grablistofwikis():
 	wikilisting = []
 	for wiki in wikis:
 		wikilisting.append([wiki.group('wiki')])
-		os.system("echo %s >> %s-wikis.txt" % (wiki, userdate))
 	wikilist = wikilisting
+	for wiki in wikilist:
+		thewiki = ''.join(wiki)
+		os.system("echo %s >> %s-wikis.txt" % (thewiki, userdate))
 
 def foreachwiki():
 	global count, sitename, curdate
