@@ -136,7 +136,7 @@ def rmdir(wiki):
 	os.system('rm -rf ' + wiki)
 
 def archiveone(wiki):
-	global sitename, userdate
+	global curdate, sitename, userdate
 	x = converter.ASConverter()
 	x.convertdate(userdate)
 	downloaddump(wiki)
