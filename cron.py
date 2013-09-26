@@ -20,7 +20,7 @@ import datetime
 import time
 
 # Configuration goes here
-path = "" # No trailing slash
+path = "." # No trailing slash
 
 # Nothing to change below...
 date = ""
