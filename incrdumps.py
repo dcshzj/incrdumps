@@ -39,6 +39,9 @@ count = 0
 start = ""
 sitename = ""
 curdate = ""
+language = ""
+wikifamily = ""
+archivedate = ""
 wikitoarchive = None
 
 # Clone the settings in settings.py
@@ -72,12 +75,14 @@ def grablistofwikis():
 		os.system("echo %s >> %s-wikis.txt" % (thewiki, userdate))
 
 def foreachwiki():
-	global count, sitename, curdate
+	global count, sitename, curdate, language, wikifamily, archivedate
 	for thewiki in wikilist:
 		curwiki = ''.join(thewiki)
 		x = converter.ASConverter()
 		x.convertdate(userdate)
 		curdate = x.date
+		d = datetime.strptime(curdate, '%Y%m%d')
+		archivedate = d.strftime('%Y-%m-%d')
 		if (curwiki == "Here's the big fat disclaimer."): # The only non-wiki string that is in bold
 			continue
 		else:
@@ -85,10 +90,18 @@ def foreachwiki():
 			x.convertdb(curwiki)
 			if (x.special):
 				sitename = x.sitename
+				if (curwiki.endswith("wikimedia")):
+					language = x.sitename
+					wikifamily = "Wikimedia"
+				else:
+					language = "English"
+					wikifamily = "Wikimedia"
 			elif (x.site == ""):
 				sitename = curwiki
 			else:
 				sitename = "the %s" % (x.sitename)
+				language = x.langname
+				wikifamily = x.site
 			upload(curwiki)
 			rmdir(curwiki)
 			count = 0 # Bringing it back down to 0 once its done uploading for the current wiki
@@ -98,7 +111,7 @@ def downloaddump(wiki):
 	os.system('rsync -av ' + rsynchost + '/' + wiki + '/' + userdate + ' ' + tempdir + '/' + wiki)
 
 def upload(wiki):
-	global count, filelist, tempdir, curdate, sitename, userdate
+	global count, filelist, tempdir, curdate, sitename, userdate, language, wikifamily, archivedate
 	os.chdir(tempdir + '/' + wiki + '/' + userdate)
 	for thefile in filelist:
 		curfile = ''.join(thefile)
@@ -112,6 +125,8 @@ def upload(wiki):
 					'--header', "'x-amz-auto-make-bucket:1'",
 					'--header', "'x-archive-meta01-collection:%s'" % (collection),
 					'--header', "'x-archive-meta-mediatype:%s'" % (mediatype),
+					'--header', "'x-archive-meta-subject:wiki;incremental;dumps;%s;%s;%s'" % (wiki, language, wikifamily),
+					'--header', "'x-archive-meta-date:%s'" % (archivedate),
 					'--header', "'x-archive-queue-derive:0'",
 					'--header', "'x-archive-size-hint:%s'" % (sizehint),
 					'--header', "'x-archive-meta-title:Wikimedia incremental dump files for %s on %s'" % (sitename, curdate),
