@@ -82,7 +82,7 @@ def foreachwiki():
 		x.convertdate(userdate)
 		curdate = x.date
 		d = datetime.strptime(curdate, '%Y%m%d')
-                archivedate = d.strftime('%Y-%m-%d')
+		archivedate = d.strftime('%Y-%m-%d')
 		if (curwiki == "Here's the big fat disclaimer."): # The only non-wiki string that is in bold
 			continue
 		else:
