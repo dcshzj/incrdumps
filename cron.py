@@ -33,33 +33,35 @@ def getdate():
 
 def checkifdone():
         global date
-        os.chdir(path + "/")
-        if (os.path.exists(date + '-done.txt')):
+        os.chdir(path)
+        if (os.path.exists("%s-done.txt" % (date))):
                 time.sleep(1800) # Check every half-hour
                 process()
         else:
                 execmd()
-                os.system('touch ' + date + '-done.txt')
+                os.system("touch %s-done.txt" % (date))
                 purge()
                 process()
 
 def purge():
-        os.chdir(path + "/")
+        os.chdir(path)
         now = datetime.datetime.now()
         now -= datetime.timedelta(days=7)
         olddate = now.strftime("%Y%m%d")
-        oldfile = olddate + '-done.txt'
+        oldfile = "%s-done.txt" % (olddate)
         if (os.path.exists(oldfile)):
-                os.system("rm " + oldfile)
+                os.system("rm %s" % (oldfile))
+                os.system("rm %s-wikis.txt" % (olddate))
         else:
                 print ""
 
 def execmd():
         global path
-        os.system('python ' + path + '/incrdumps.py ' + date)
+        os.system("python %s/incrdumps.py %s" % (path, date))
 
 def process():
         getdate()
         checkifdone()
 
-process()
+if __name__ == "__main__":
+        process()
