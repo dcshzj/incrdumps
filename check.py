@@ -20,7 +20,6 @@ class IncrChecker:
 		if (os.path.exists(self.filetouse)):
 			os.system("rm %s" % (self.filetouse))
 		else:
-			os.system("rm %s" % (self.filetouse))
 			self.reupload(wiki)
 
 	def main(self):
