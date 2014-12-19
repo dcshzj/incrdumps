@@ -24,6 +24,7 @@ import urllib
 class IncrList:
 	def __init__( self ):
 		self.hosturl = settings.hosturl
+		self.scriptdir = settings.scriptdir
 		self.today = datetime.datetime.now().strftime( "%Y%m%d" )
 		self.wikilist = []
 
@@ -42,10 +43,10 @@ class IncrList:
 				continue
 			else:
 				if ( count < 366 ):
-					os.system( "echo %s >> %s/%s-wikis.txt.1" % ( thewiki, self.today ) )
+					os.system( "echo %s >> %s/%s-wikis.txt.1" % ( thewiki, self.scriptdir, self.today ) )
 					count += 1
 				else:
-					os.system( "echo %s >> %s/%s-wikis.txt.2" % ( thewiki, self.today ) )
+					os.system( "echo %s >> %s/%s-wikis.txt.2" % ( thewiki, self.scriptdir, self.today ) )
 
 if __name__ == "__main__":
 	IncrList = IncrList()
