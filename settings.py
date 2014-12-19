@@ -16,4 +16,3 @@ collection = ""
 mediatype = ""
 # You don't really need to change this
 sizehint = "107374182400" # 100GB
-parts = 2

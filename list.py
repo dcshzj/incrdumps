@@ -24,7 +24,6 @@ import urllib
 class IncrList:
 	def __init__( self ):
 		self.hosturl = settings.hosturl
-		self.parts = settings.parts
 		self.today = datetime.datetime.now().strftime( "%Y%m%d" )
 		self.wikilist = []
 
