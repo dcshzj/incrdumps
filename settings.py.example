@@ -2,6 +2,8 @@
 
 # The directory that the incremental dumps are stored
 dumpsdir = "" # No slash at the end
+# The directory that these scripts are located at
+scriptdir = "" # No slash at the end
 
 # Archive.org's S3-like API keys
 # (Get yours at http://archive.org/account/s3.php)
