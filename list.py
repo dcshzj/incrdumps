@@ -42,10 +42,10 @@ class IncrList:
 				continue
 			else:
 				if ( count < 366 ):
-					os.system( "echo %s >> %s-wikis.txt.1" % ( thewiki, self.today ) )
+					os.system( "echo %s >> %s/%s-wikis.txt.1" % ( thewiki, self.today ) )
 					count += 1
 				else:
-					os.system( "echo %s >> %s-wikis.txt.2" % ( thewiki, self.today ) )
+					os.system( "echo %s >> %s/%s-wikis.txt.2" % ( thewiki, self.today ) )
 
 if __name__ == "__main__":
 	IncrList = IncrList()

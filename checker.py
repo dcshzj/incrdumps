@@ -17,6 +17,7 @@
 
 from datetime import datetime, timedelta
 import os
+import settings
 import sys
 import time
 
@@ -27,12 +28,13 @@ class IncrChecker:
 		self.date = workingdate.strftime( '%Y%m%d' )
 		self.deletedate = deletedate.strftime( '%Y%m%d' )
 		self.filetouse = "status.txt"
+		self.scriptdir = settings.scriptdir
 
 	def dldtestfile( self, wiki ):
 		os.system( "wget -cq http://archive.org/download/incr-%s-%s/%s" % ( wiki, self.date, self.filetouse ) )
 
 	def reupload( self, wiki ):
-		os.system( "python runner.py %s %s" % ( wiki, self.date ) )
+		os.system( "python %s/runner.py %s %s" % ( self.scriptdir, wiki, self.date ) )
 
 	def test( self, wiki ):
 		self.dldtestfile( wiki )

@@ -17,11 +17,13 @@
 
 import datetime
 import os
+import settings
 import sys
 
 class IncrLauncher:
 	def __init__( self ):
 		self.dumpdate = self.getDumpDate()
+		self.scriptdir = settings.scriptdir
 		self.wikilist = ''
 
 	def getDumpDate( self ):
@@ -31,13 +33,13 @@ class IncrLauncher:
 
 	def processArgs( self ):
 		if ( sys.argv[1] == 'one' ):
-			self.wikilist = '%s-wikis.txt.1' % ( self.dumpdate )
+			self.wikilist = '%s/%s-wikis.txt.1' % ( self.scriptdir, self.dumpdate )
 		elif ( sys.argv[1] == 'two' ):
-			self.wikilist = '%s-wikis.txt.2' % ( self.dumpdate )
+			self.wikilist = '%s/%s-wikis.txt.2' % ( self.scriptdir, self.dumpdate )
 		self.dispatch()
 
 	def dispatch( self ):
-		os.system( 'python runner.py list %s %s' % ( self.wikilist, self.dumpdate ) )
+		os.system( 'python %s/runner.py list %s %s' % ( self.scriptdir, self.wikilist, self.dumpdate ) )
 
 if __name__ == "__main__":
 	IncrLauncher = IncrLauncher()
