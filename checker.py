@@ -44,14 +44,14 @@ class IncrChecker:
 			self.reupload( wiki )
 
 	def main( self ):
-		wikilist = "%s-wikis.txt.1" % ( self.date )
+		wikilist = "%s/%s-wikis.txt.1" % ( self.scriptdir, self.date )
 		wikis = open( wikilist, 'r' ).read().splitlines()
 		for wiki in wikis:
 			time.sleep( 1 ) # Ctrl+C
 			print "Checking %s..." % ( wiki )
 			self.test( wiki )
 
-		wikilist2 = "%s-wikis.txt.2" % ( self.date )
+		wikilist2 = "%s/%s-wikis.txt.2" % ( self.scriptdir, self.date )
 		wikis2 = open( wikilist2, 'r' ).read().splitlines()
 		for wiki2 in wikis2:
 			print "Checking %s..." % ( wiki2 )
