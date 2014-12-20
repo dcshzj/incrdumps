@@ -57,8 +57,8 @@ class IncrChecker:
 			print "Checking %s..." % ( wiki2 )
 			self.test( wiki2 )
 
-		os.remove( "%s-wikis.txt.1" % ( self.deletedate ) )
-		os.remove( "%s-wikis.txt.2" % ( self.deletedate ) )
+		os.remove( "%s/%s-wikis.txt.1" % ( self.scriptdir, self.deletedate ) )
+		os.remove( "%s/%s-wikis.txt.2" % ( self.scriptdir, self.deletedate ) )
 
 if __name__ == "__main__":
 	IncrChecker = IncrChecker()
